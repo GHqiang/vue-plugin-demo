@@ -1,6 +1,6 @@
 {
   "name": "vue-plugins-demo",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "一个简单的vue组件库",
   "main": "lib/vue-plugins-demo.umd.min.js",
   "private": false,
