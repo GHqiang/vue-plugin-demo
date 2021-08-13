@@ -4,7 +4,7 @@ node_modules
 examples/
 packages/
 public
-lib
+
 # local env files
 .env.local
 .env.*.local
