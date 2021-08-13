@@ -1,24 +1,14 @@
-# vue-plugin-demo
+> 一个简单的vue组件库
+# Install
+```js
+$ npm install --save vue-plugins-demo
+```
+## Use
 
-## Project setup
-```
-npm install
-```
+1、main.js引入
+```js
+import plugins from 'vue-plugins-demo'
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+Vue.use(plugins)
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
