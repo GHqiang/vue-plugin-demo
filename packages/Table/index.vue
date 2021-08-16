@@ -11,10 +11,10 @@
     <!-- 是否展示序号 -->
     <el-table-column type="index" :index="indexMethod" v-if="isSortNum" label="序号" width="70" />
     <!-- prop必须设置值合计才会生效 -->
-    <el-table-column :show-overflow-tooltip="value.tooltip===false?false:true" :sortable="value.sortable" :prop="key" v-for="(value, key, index) in labelList" :label="value.labelText" :align="value.align||'left'" :fixed="value.isFixed" :key="index" :min-width="value.minWidth" :width="value.width">
+    <el-table-column :show-overflow-tooltip="value.tooltip===false?false:true" :sortable="value.sortable" v-for="(value, key, index) in labelList" :label="value.labelText" :align="value.align||'left'" :fixed="value.isFixed" :key="index" :min-width="value.minWidth" :width="value.width">
       <template slot-scope="scope">
-        <span v-if="value.isLink" :class="scope.row[key]?'linkColor':''" @click="() =>scope.row[key]?value.linkHandle(scope.row):null">{{scope.row[key] | formatHandle(value.isAmount)}}</span>
-        <span v-else>{{scope.row[key]| formatHandle(value.isAmount)}}</span>
+        <span v-if="value.isLink" :class="scope.row[key]?'linkColor':''" @click="() =>scope.row[key]?value.linkHandle(scope.row):null">{{scope.row[key] | formatHandle(value)}}</span>
+        <span v-else>{{scope.row[key] | formatHandle(value)}}</span>
       </template>
     </el-table-column>
     <!-- 自定义或者操作列用来处理里面比较特殊比较复杂的比如开关什么之类的 -->
@@ -102,6 +102,7 @@ export default {
           //   sortable: true,     //  是否排序 true-表格默认排序 custom-自定义排序(需配合sort-change监听使用)
           //   isLink: true,       //  是否可跳转
           //   linkHandle: this.toStatementList,  // 点击跳转事件
+          //   formatFunc: this.formatFunc,  // 点格式化处理
 
           // }
         }
@@ -129,7 +130,12 @@ export default {
   },
   filters: {
     // 格式化处理为空显示--
-    formatHandle(cellValue, isAmount) {
+    formatHandle(cellValue, value) {
+      console.log(cellValue, value)
+      if (value.formatFunc) {
+        return value.formatFunc(cellValue)
+      }
+      const { isAmount } = value
       if (isAmount) {
         if (cellValue) {
           const intPart = cellValue.toString().split('.')[0] // 获取整数部分

@@ -5,12 +5,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import plugins from '../packages/index'
-import ruleVerify from 'ele-form-verify'
+// import ruleVerify from 'ele-form-verify'
 Vue.use(ElementUI)
 Vue.use(plugins)
 // Vue.use(QueryForm)
 // 全局方法挂载
-Vue.prototype.ruleVerify = ruleVerify
+// Vue.prototype.ruleVerify = ruleVerify
 Vue.config.productionTip = false
 Vue.filter('NumFormat', (val) => {
   if (val) {
