@@ -1,7 +1,7 @@
 <template>
-  <el-table v-loading="tableLoading" ref='tableExample' :default-sort="defaultSort" :empty-text="emptyText" @sort-change="sortChange" :max-height="maxHeight" v-tableHeight:maxHeight="maxHeightOptions" :data="tableData" :fithighlight-current-row="isFithighlight" :header-cell-class-name="headerCellClassName" @selection-change="selectionChange">
+  <el-table v-loading="tableLoading" ref='tableExample' :row-key="rowKey" :default-sort="defaultSort" :empty-text="emptyText" @sort-change="sortChange" :max-height="maxHeight" v-tableHeight:maxHeight="maxHeightOptions" :data="tableData" :fithighlight-current-row="isFithighlight" :header-cell-class-name="headerCellClassName" @selection-change="selectionChange">
     <!-- 是否多选 -->
-    <el-table-column type="selection" v-if="isBatch" :selectable="selectable" />
+    <el-table-column type="selection" v-if="isBatch" :selectable="selectable" :reserve-selection="isReserveSelected" />
     <!-- 是否单选 -->
     <el-table-column v-if="isRadio" align="center" width="55">
       <template slot-scope="scope">
@@ -11,7 +11,7 @@
     <!-- 是否展示序号 -->
     <el-table-column type="index" :index="indexMethod" v-if="isSortNum" label="序号" width="70" />
     <!-- prop必须设置值合计才会生效 -->
-    <el-table-column :show-overflow-tooltip="value.tooltip===false?false:true" :sortable="value.sortable" v-for="(value, key, index) in labelList" :label="value.labelText" :align="value.align||'left'" :fixed="value.isFixed" :key="index" :min-width="value.minWidth" :width="value.width">
+    <el-table-column :show-overflow-tooltip="value.tooltip===false?false:true" :prop="key" :sortable="value.sortable" v-for="(value, key, index) in labelList" :label="value.labelText" :align="value.align||'left'" :fixed="value.isFixed" :key="index" :min-width="value.minWidth" :width="value.width">
       <template slot-scope="scope">
         <span v-if="value.isLink" :class="scope.row[key]?'linkColor':''" @click="() =>scope.row[key]?value.linkHandle(scope.row):null">{{scope.row[key] | formatHandle(value)}}</span>
         <el-switch v-else-if="value.isSwitch" v-model="scope.row[key]" :active-value="value.activeVal" :inactive-value="value.inactiveVal" @change="value.switchChange(scope.row)"></el-switch>
@@ -51,6 +51,14 @@ export default {
     isBatch: {              //  是否需要多选
       typeof: Boolean,
       default: false
+    },
+    isReserveSelected: {     //  是否储备记忆选中(需搭配row-key使用)
+      typeof: Boolean,
+      default: true
+    },
+    rowKey: {            //  行数据的 Key，用来优化 Table 的渲染；在使用 reserve-selection 功能与显示树形数据时，该属性是必填的
+      typeof: String,
+      default: 'id'
     },
     getSelectRow: {         //  多选数据改变的回调
       typeof: Function
