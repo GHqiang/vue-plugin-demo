@@ -1,11 +1,11 @@
 import directives from './directives/index'
 import './directives/debounce'
 // 导入单个组件
-import Form from './Form/index.vue'
-import QueryForm from './QueryForm/index.vue'
-import Table from './Table/index.vue'
-import QueryTable from './QueryTable/index.vue'
-import Pagination from './Pagination/index.vue'
+import Form from './components/Form.vue'
+import QueryForm from './components/QueryForm.vue'
+import Table from './components/Table.vue'
+import QueryTable from './components/QueryTable.vue'
+import Pagination from './components/Pagination.vue'
 
 // 以数组的结构保存组件，便于遍历
 const components = [
